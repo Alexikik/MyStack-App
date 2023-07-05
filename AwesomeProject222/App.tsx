@@ -72,10 +72,6 @@ function Section({children, title}: SectionProps): JSX.Element {
 // }
 
 function HomeScreen({ navigation }: { navigation: any }) {
-// http://212.10.61.210:2003/Connection/Ping
-
-  // var result = await FetchText();
-  // var result = 'test';
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState('test');
 
@@ -91,19 +87,6 @@ function HomeScreen({ navigation }: { navigation: any }) {
       setLoading(false);
     }
   };
-  // const strToShow = () => {
-  //   return fetch('http://212.10.61.210:2003/connection/ping')
-  //   .then(response => response.text())
-  //   .then(text => {
-  //     console.log(text);
-  //     result = text;
-  //     return result;
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
-  //     return error;
-  //   });
-  // }
 
   useEffect(() => {
     getStrToShow();
@@ -117,9 +100,13 @@ function HomeScreen({ navigation }: { navigation: any }) {
         <View>
           <Text>Home Screen</Text>
           <Text>{data}</Text>
-          <Button
+          {/* <Button
             title="Go to Details"
             onPress={() => navigation.navigate('Details')}
+          /> */}
+          <Button
+            title="Refresh"
+            onPress={() => getStrToShow()}
           />
         </View>
       )}
@@ -134,18 +121,6 @@ function DetailsScreen() {
     </View>
   );
 }
-
-// async function FetchText() {
-//   return await fetch('http://212:10:61:210:2003/Connection/Ping')
-//     .then(response => response.text())
-//     .then(text => {
-//       console.log(text);
-//       return text;
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// }
 
 // const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
