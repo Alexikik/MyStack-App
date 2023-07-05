@@ -33,6 +33,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import {useEffect, useState} from 'react';
 import { ActivityIndicator } from 'react-native';
 
+import MyComponent from './my_components/api_status_overview'
+
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
@@ -77,6 +79,9 @@ function HomeScreen({ navigation }: { navigation: any }) {
 
   const getStrToShow = async () => {
     try {
+      // if (!isLoading) {
+      //   setLoading(true);
+      // }
       const response = await fetch('http://212.10.61.210:2003/connection/ping');
       const json = await response.text();
       console.log(json);
@@ -100,14 +105,11 @@ function HomeScreen({ navigation }: { navigation: any }) {
         <View>
           <Text>Home Screen</Text>
           <Text>{data}</Text>
-          {/* <Button
-            title="Go to Details"
-            onPress={() => navigation.navigate('Details')}
-          /> */}
           <Button
             title="Refresh"
             onPress={() => getStrToShow()}
           />
+          <MyComponent />
         </View>
       )}
     </View>
