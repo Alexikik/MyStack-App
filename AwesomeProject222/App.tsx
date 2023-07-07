@@ -10,9 +10,6 @@ import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   Button,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
@@ -21,99 +18,77 @@ import {
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 import {NavigationContainer} from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import {useEffect, useState} from 'react';
-import { ActivityIndicator } from 'react-native';
 
-import MyComponent from './my_components/api_status_overview'
+import MyComponent from './my_components/api_status_overview222'
 
 type SectionProps = PropsWithChildren<{
   title: string;
 }>;
 
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-// function HomeScreen() {
+// function Section({children, title}: SectionProps): JSX.Element {
+//   const isDarkMode = useColorScheme() === 'dark';
 //   return (
-//     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-//       <Text>Home Screen</Text>
+//     <View style={styles.sectionContainer}>
+//       <Text
+//         style={[
+//           styles.sectionTitle,
+//           {
+//             color: isDarkMode ? Colors.white : Colors.black,
+//           },
+//         ]}>
+//         {title}
+//       </Text>
+//       <Text
+//         style={[
+//           styles.sectionDescription,
+//           {
+//             color: isDarkMode ? Colors.light : Colors.dark,
+//           },
+//         ]}>
+//         {children}
+//       </Text>
 //     </View>
 //   );
 // }
 
-function HomeScreen({ navigation }: { navigation: any }) {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState('test');
 
-  const getStrToShow = async () => {
-    try {
-      // if (!isLoading) {
-      //   setLoading(true);
-      // }
-      const response = await fetch('http://212.10.61.210:2003/connection/ping');
-      const json = await response.text();
-      console.log(json);
-      setData(json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+interface HomeScreenState {
+  isLoading: boolean;
+  data: string;
+}
 
-  useEffect(() => {
-    getStrToShow();
-  });
 
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
+class HomeScreen222 extends React.Component<{}, HomeScreenState> {
+  childRef: React.RefObject<MyComponent>;
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      data: 'test',
+    };
+    this.childRef = React.createRef();
+  }
+
+  render(): React.ReactNode {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View>
-          <Text>Home Screen</Text>
-          <Text>{data}</Text>
-          <Button
-            title="Refresh"
-            onPress={() => getStrToShow()}
-          />
-          <MyComponent />
-        </View>
-      )}
-    </View>
-  );
+            <Text>Home Screen</Text>
+            <Text>{this.state.data}</Text>
+            <Button
+              title="Refresh"
+              onPress={() => this.childRef.current?.refresh()}
+            />
+            <MyComponent ref={this.childRef}/>
+          </View>
+      </View>
+    );
+  }
 }
 
 function DetailsScreen() {
@@ -137,56 +112,12 @@ function App(): JSX.Element {
   return (
     <NavigationContainer>
       <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Home" component={HomeScreen222} />
         <Drawer.Screen name="Details" component={DetailsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
-
-    // <NavigationContainer>
-    //   {/* <Drawer.Navigator>
-    //     <Drawer.Screen name="Feed" component={HomeScreen} />
-    //     <Drawer.Screen name="Article" component={DetailsScreen} />
-    //   </Drawer.Navigator> */}
-    //   <Stack.Navigator initialRouteName='Home'>
-    //     <Stack.Screen name="Home" component={HomeScreen} />
-    //     <Stack.Screen name="Details" component={DetailsScreen}/>
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-
-      /* <SafeAreaView style={backgroundStyle}>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={backgroundStyle.backgroundColor}
-        />
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={backgroundStyle}>
-          <Header />
-          <View
-            style={{
-              backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            }}>
-            <Section title="Step One">
-              Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-              screen and then come back to see your edits. Done :D
-            </Section>
-            <Section title="See Your Changes">
-              <ReloadInstructions />
-            </Section>
-            <Section title="Debug">
-              <DebugInstructions />
-            </Section>
-            <Section title="Learn More">
-              Read the docs to discover what to do next:
-            </Section>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView> */
   );
 }
-
-
 
 const styles = StyleSheet.create({
   sectionContainer: {
