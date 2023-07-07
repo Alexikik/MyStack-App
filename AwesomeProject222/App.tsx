@@ -24,6 +24,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import HomeScreen from './pages/homeScreen';
 import DetailsScreen from './pages/details';
+import LoginPage from './pages/loginPage';
 
 // type SectionProps = PropsWithChildren<{
 //   title: string;
@@ -71,6 +72,7 @@ function App(): JSX.Element {
       <Drawer.Navigator>
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Details" component={DetailsScreen} />
+        <Drawer.Screen name="Login" component={LoginPage} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
