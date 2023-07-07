@@ -1,6 +1,6 @@
 
 import {NavigationContainer} from '@react-navigation/native';
-import MyComponent from '../my_components/api_status_overview';
+import ApiStatusOverview from '../my_components/api_status_overview';
 import React from 'react';
 import { Button, Text, View } from 'react-native';
 
@@ -13,7 +13,7 @@ interface HomeScreenState {
 
 
 class HomeScreen extends React.Component<{}, HomeScreenState> {
-    childRef: React.RefObject<MyComponent>;
+    childRef: React.RefObject<ApiStatusOverview>;
     constructor(props: {}) {
     super(props);
     this.state = {
@@ -33,7 +33,7 @@ class HomeScreen extends React.Component<{}, HomeScreenState> {
                         title="Refresh"
                         onPress={() => this.childRef.current?.refresh()}
                     />
-                    <MyComponent ref={this.childRef}/>
+                    <ApiStatusOverview ref={this.childRef}/>
                 </View>
             </View>
         );
