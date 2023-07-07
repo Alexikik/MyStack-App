@@ -7,9 +7,7 @@ import 'react-native-gesture-handler';
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
-  Button,
   StyleSheet,
   Text,
   useColorScheme,
@@ -24,11 +22,12 @@ import {NavigationContainer} from '@react-navigation/native';
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import MyComponent from './my_components/api_status_overview222'
+import HomeScreen from './pages/homeScreen';
+import DetailsScreen from './pages/details';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+// type SectionProps = PropsWithChildren<{
+//   title: string;
+// }>;
 
 // function Section({children, title}: SectionProps): JSX.Element {
 //   const isDarkMode = useColorScheme() === 'dark';
@@ -57,48 +56,6 @@ type SectionProps = PropsWithChildren<{
 // }
 
 
-interface HomeScreenState {
-  isLoading: boolean;
-  data: string;
-}
-
-
-class HomeScreen222 extends React.Component<{}, HomeScreenState> {
-  childRef: React.RefObject<MyComponent>;
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      isLoading: true,
-      data: 'test',
-    };
-    this.childRef = React.createRef();
-  }
-
-  render(): React.ReactNode {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <View>
-            <Text>Home Screen</Text>
-            <Text>{this.state.data}</Text>
-            <Button
-              title="Refresh"
-              onPress={() => this.childRef.current?.refresh()}
-            />
-            <MyComponent ref={this.childRef}/>
-          </View>
-      </View>
-    );
-  }
-}
-
-function DetailsScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-    </View>
-  );
-}
-
 // const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -112,7 +69,7 @@ function App(): JSX.Element {
   return (
     <NavigationContainer>
       <Drawer.Navigator>
-        <Drawer.Screen name="Home" component={HomeScreen222} />
+        <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Details" component={DetailsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>

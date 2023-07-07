@@ -1,42 +1,86 @@
 import React from 'react';
 import { Text } from 'react-native';
-import {useEffect, useState} from 'react';
 
-function tester() {
-  const [monitorApiStatus, setMonitorApiStatus] = useState('test');
-  const [authApiStatus, setAuthApiStatus] = useState('test');
+const MONITOR_API_URL = 'http://212.10.61.210:2003/connection/ping';
+const AUTH_API_URL = 'http://212.10.61.210:2000/connection/ping';
 
-  const getMonitorApiStatus = async () => {
-    try {
-        const response = await fetch('http://212.10.61.210:2003/connection/ping');
-        const json = await response.text();
-        setMonitorApiStatus(json);
-    } catch (error) {
-        console.error(error);
-    }
-  };
-
-  const getAuthApiStatus = async () => {
-    try {
-        const response = await fetch('http://212.10.61.210:2000/connection/ping');
-        const json = await response.text();
-        setAuthApiStatus(json);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    getMonitorApiStatus();
-    getAuthApiStatus();
-  });
-
-  return (
-    <>
-      <Text>{monitorApiStatus}</Text>
-      <Text>{authApiStatus}</Text>
-    </>
-  )
+interface State {
+    monitorApiStatus: string;
+    authApiStatus: string;
+    monitorApiStatusLoading: boolean;
+    authApiStatusLoading: boolean;
 }
 
-export default tester;
+class api_status_overview extends React.Component<{}, State> {
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            monitorApiStatus: '',
+            authApiStatus: '',
+            monitorApiStatusLoading: true,
+            authApiStatusLoading: true,
+        }
+
+        this.getMonitorApiStatus = this.getMonitorApiStatus.bind(this);
+        this.getAuthApiStatus = this.getAuthApiStatus.bind(this);
+        this.refresh = this.refresh.bind(this);
+    }
+    
+    async _getApiStatus (url: string) {
+        try {
+            const response = await fetch(url);
+            const json = await response.text();
+            return json;
+        } catch (error) {
+            console.error(error);
+            return 'error';
+        }
+    };
+    
+    async getMonitorApiStatus() {
+        this.setState({monitorApiStatusLoading: true});
+
+        let response = await this._getApiStatus(MONITOR_API_URL);
+
+        this.setState({monitorApiStatus: response});
+        this.setState({monitorApiStatusLoading: false});
+    };
+
+    async getAuthApiStatus() {
+        this.setState({authApiStatusLoading: true});
+
+        let response = await this._getApiStatus(AUTH_API_URL);
+
+        this.setState({authApiStatusLoading: false});
+        this.setState({authApiStatus: response});
+    };
+
+    refresh() {
+        this.getMonitorApiStatus();
+        this.getAuthApiStatus();
+    }
+
+    componentDidMount() {
+        this.getMonitorApiStatus();
+        this.getAuthApiStatus();
+    }
+
+    render() {
+        return (
+            <>
+                {this.state.monitorApiStatusLoading ? (
+                    <Text>Loading...</Text>
+                    ) : (
+                        <Text>{this.state.monitorApiStatus}</Text>
+                        )}
+                {this.state.authApiStatusLoading ? (
+                    <Text>Loading...</Text>
+                ) : (
+                    <Text>{this.state.authApiStatus}</Text>
+                )}
+            </>
+        );
+    }
+}
+
+export default api_status_overview;
