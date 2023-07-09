@@ -25,6 +25,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from './pages/homeScreen';
 import DetailsScreen from './pages/details';
 import LoginPage from './pages/loginPage';
+import TestPage from './pages/testPage';
 
 // type SectionProps = PropsWithChildren<{
 //   title: string;
@@ -63,9 +64,10 @@ const Drawer = createDrawerNavigator();
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+  const backgroundStyle = Colors.darker;
+  // const backgroundStyle = {
+  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  // };
 
   return (
     <NavigationContainer>
@@ -73,6 +75,7 @@ function App(): JSX.Element {
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Details" component={DetailsScreen} />
         <Drawer.Screen name="Login" component={LoginPage} />
+        <Drawer.Screen name="Test" component={TestPage} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

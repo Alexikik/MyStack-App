@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import ApiStatusOverview from '../my_components/api_status_overview';
 import React from 'react';
 import { Button, Text, View } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 
@@ -25,7 +26,7 @@ class HomeScreen extends React.Component<{}, HomeScreenState> {
 
     render(): React.ReactNode {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.darker }}>
                 <View>
                     <Text>Home Screen</Text>
                     <Text>{this.state.data}</Text>
