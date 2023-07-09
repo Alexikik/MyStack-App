@@ -15,10 +15,10 @@ class Auth extends React.Component<any, any> {
         this.retrieve_token_from_storage = this.retrieve_token_from_storage.bind(this);
     }
         
-    async login(username: string, password: string): Promise<string> {
+    async login(email: string, password: string): Promise<string> {
         try {
             // Call login function
-            const response: AuthenticateResponse | string = await this._call_auth_api(LOGIN_URL, username, password);
+            const response: AuthenticateResponse | string = await this._call_auth_api(LOGIN_URL, email, password);
             this.state = { login_response: response };
             
             

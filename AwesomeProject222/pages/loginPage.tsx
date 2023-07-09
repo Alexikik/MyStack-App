@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { Text, View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 
 import Auth from "../my_components/auth";
 
@@ -8,7 +7,7 @@ class LoginPage extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            username: "user@example.com",
+            email: "user@example.com",
             password: "string",
             isLoading: false,
             responseText: "",
@@ -21,7 +20,7 @@ class LoginPage extends React.Component<any, any> {
             this.setState({responseText: "Loading..."});
 
             const auth = new Auth();
-            const result = await auth.login(this.state.username, this.state.password);
+            const result = await auth.login(this.state.email, this.state.password);
             this.setState({responseText: result});
         } catch (error) {
             console.error(error);
@@ -31,33 +30,59 @@ class LoginPage extends React.Component<any, any> {
 
     render(): React.ReactNode {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <View>
-                    <Text>Login Page</Text>
-                    {/* Username textbox with label */}
-                    <Text>Username</Text>
-                    <TextInput>
-                        {this.state.username}
-                    </TextInput>
-
-                    {/* Password textbox with label */}
-                    <Text>Password</Text>
-                    <TextInput>
-                        {this.state.password}
-                    </TextInput>
-
-                    {/* Login button */}
-                    <Button
-                        title="Login"
-                        onPress={() => this._login()}
-                    />
-
-                    {/* Error message */}
-                    <Text>{this.state.responseText}</Text>
-                </View>
+            <View style={styles.container}>
+            <Text style={styles.label}>Email:</Text>
+            <TextInput
+                value={this.state.email}
+                autoCapitalize="none"
+                style={styles.input}
+            />
+            <Text style={styles.label}>Password:</Text>
+            <TextInput
+                value={this.state.password}
+                secureTextEntry
+                style={styles.input}
+            />
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => this._login()}
+            >
+                <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 20,
+        backgroundColor: '#333',
+        flex: 1,
+        },
+    label: {
+        fontSize: 18,
+        marginBottom: 10,
+        color: 'white',
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: 'gray',
+        padding: 10,
+        marginBottom: 20,
+        borderRadius: 5,
+        color: 'white',
+    },
+    button: {
+        backgroundColor: '#1e90ff',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 18,
+    },
+});
 
 export default LoginPage;
