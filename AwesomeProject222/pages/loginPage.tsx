@@ -27,12 +27,6 @@ class LoginPage extends React.Component<any, any> {
             console.error(error);
             this.setState({responseText: "Error"});
         }
-        
-        
-        // throw new Error("Function not implemented.");
-        // Call login function
-        // If login successful, navigate to home screen
-        // If login unsuccessful, display error message
     }
 
     render(): React.ReactNode {
