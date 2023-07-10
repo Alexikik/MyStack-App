@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text } from 'react-native';
 
+import styles from '../Stylesheet';
+
 const MONITOR_API_URL = 'http://212.10.61.210:2003/connection/ping';
 const AUTH_API_URL = 'http://212.10.61.210:2000/connection/ping';
 
@@ -69,14 +71,14 @@ class api_status_overview extends React.Component<{}, State> {
         return (
             <>
                 {this.state.monitorApiStatusLoading ? (
-                    <Text>Loading...</Text>
+                    <Text style={styles.text}>Loading...</Text>
                     ) : (
-                        <Text>{this.state.monitorApiStatus}</Text>
+                        <Text style={styles.text}>{this.state.monitorApiStatus}</Text>
                         )}
                 {this.state.authApiStatusLoading ? (
-                    <Text>Loading...</Text>
+                    <Text style={styles.text}>Loading...</Text>
                 ) : (
-                    <Text>{this.state.authApiStatus}</Text>
+                    <Text style={styles.text}>{this.state.authApiStatus}</Text>
                 )}
             </>
         );
