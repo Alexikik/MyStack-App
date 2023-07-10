@@ -1,5 +1,6 @@
 ## Mine
-One terminal with "npm start" and another with "npm run android".
+npm install
+One terminal with "npx react-native start" and another with "npm run android".
 New method is to "npx react-native" and "npm run android".
 
 

@@ -35,7 +35,16 @@ class TestPage extends React.Component<any, any> {
 
     async authPing() {
         const auth = new Auth();
-        const response = await auth.test_auth_authenticate();
+        const response = await auth.test_auth_authenticate().catch((error) => {
+            console.error(error);
+            this.setState({authPingResponse: 'error'});
+            return;
+        });
+
+        if (response == null || response == undefined || response == "") {
+            this.setState({authPingResponse: 'error'});
+            return;
+        }
 
         this.setState({authPingResponse: response});
     }
