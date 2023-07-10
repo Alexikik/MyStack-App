@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 
 import {
-  Colors,
+  Colors, Header,
 } from 'react-native/Libraries/NewAppScreen';
 
 import {NavigationContainer} from '@react-navigation/native';
@@ -76,7 +76,11 @@ const Drawer = createDrawerNavigator();
 //       navigation.navigate({ name: 'Login' });
 //     }
 // }
+
+
+
 function App(): JSX.Element {
+  const [authenticated, setAuthenticated] = React.useState(false);
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = Colors.darker;
@@ -88,12 +92,19 @@ function App(): JSX.Element {
   //   TokenAuth(navigation);
   // }, []);
 
+  async function TokenAuth() {
+    const auth = new Auth();
+    const result = await auth.TokenAuth();
+  
+    setAuthenticated(result);
+  }
+
   const auth = new Auth();
 
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="Home"
+        initialRouteName="Login"
         screenOptions={{
           drawerStyle: {
             backgroundColor: styles.drawerBackground.color,
@@ -112,8 +123,8 @@ function App(): JSX.Element {
         >
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Details" component={DetailsScreen} />
-        <Drawer.Screen name="Login" component={LoginPage} />
         <Drawer.Screen name="Test" component={TestPage} />
+        <Drawer.Screen name="Login" component={LoginPage} options={{headerShown: false, swipeEnabled: false, drawerItemStyle: {height: 0}}}/>
       </Drawer.Navigator>
     </NavigationContainer>
   );

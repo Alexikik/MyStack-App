@@ -74,7 +74,7 @@ class HomeScreen extends React.Component<any, HomeScreenState> {
                 <ApiStatusOverview ref={this.childRef}/>
 
                 <TouchableOpacity
-                    style={styles.button}
+                    style={{...styles.button, position: 'absolute', bottom: 0, width: '105%', margin: 10, alignItems: 'center'}}
                     onPress={() => this.onLogout()}
                 >
                     <Text style={styles.buttonText}>Logout</Text>

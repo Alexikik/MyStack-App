@@ -1,6 +1,8 @@
 import React from "react";
 import { Text, View } from "react-native";
 
+import styles from "../Stylesheet";
+
 import Auth from "../my_components/auth";
 
 class TestPage extends React.Component<any, any> {
@@ -56,20 +58,18 @@ class TestPage extends React.Component<any, any> {
 
     render(): React.ReactNode {
         return (
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', margin: 10 }}>
-                <View>
-                    <Text style={{fontSize: 24 }}>Test Page</Text>
+            <View style={styles.container}>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', margin: 10 }}>
+                    <Text style={styles.text}>Login token response</Text>
+                    <Text style={styles.text}>{this.state.loginToken}</Text>
+                    <Text style={styles.text}></Text>
 
-                    <Text>Login token response</Text>
-                    <Text>{this.state.loginToken}</Text>
-                    <Text></Text>
+                    <Text style={styles.text}>Retreive token from secure storage</Text>
+                    <Text style={styles.text}>{this.state.storageToken}</Text>
+                    <Text style={styles.text}></Text>
 
-                    <Text>Retreive token from secure storage</Text>
-                    <Text>{this.state.storageToken}</Text>
-                    <Text></Text>
-
-                    <Text>Auth ping response</Text>
-                    <Text>{this.state.authPingResponse}</Text>
+                    <Text style={styles.text}>Auth ping response</Text>
+                    <Text style={styles.text}>{this.state.authPingResponse}</Text>
                 </View>
             </View>
         );

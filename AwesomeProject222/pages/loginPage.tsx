@@ -1,8 +1,9 @@
 import React from "react";
-import { Text, View, TextInput, TouchableOpacity } from "react-native";
+import { Text, View, TextInput, TouchableOpacity, ActivityIndicator } from "react-native";
 
 import styles from "../Stylesheet";
 import Auth from "../my_components/auth";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 class LoginPage extends React.Component<any, any> {
     constructor(props: any) {
@@ -10,9 +11,18 @@ class LoginPage extends React.Component<any, any> {
         this.state = {
             email: "user@example.com",
             password: "string",
-            isLoading: false,
+            isAuthenticating: true,
             responseText: "",
         }
+    }
+
+    async TokenAuth() {
+        const auth = new Auth();
+        const result = await auth.TokenAuth();
+        if (result) {
+            this.props.navigation.navigate('Home');
+        }
+        this.setState({isAuthenticating: false});
     }
 
     async _login() {
@@ -36,7 +46,18 @@ class LoginPage extends React.Component<any, any> {
         }
     }
 
+    componentDidMount() {
+        this.TokenAuth();
+    }
+
     render(): React.ReactNode {
+        if (this.state.isAuthenticating) {
+            return(
+                <View style={styles.container}>
+                    <ActivityIndicator animating={this.state.isAuthenticating}/>
+                </View>
+            )
+        }
         return (
             <View style={styles.container}>
                 <Text style={styles.label}>Email:</Text>
