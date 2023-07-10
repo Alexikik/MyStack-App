@@ -16,7 +16,7 @@ class Auth extends React.Component<any, any> {
         this.logout = this.logout.bind(this);
     }
         
-    async login(email: string, password: string): Promise<string> {
+    async login(email: string, password: string): Promise<boolean | string> {
         try {
             // Call login function
             const response: AuthenticateResponse | string = await this._call_auth_api(LOGIN_URL, email, password);
@@ -34,7 +34,7 @@ class Auth extends React.Component<any, any> {
             await EncryptedStorage.setItem('email', this.state.login_response.email);
             await EncryptedStorage.setItem('userId', this.state.login_response.id);
 
-            return 'Welcome ' + await this.state.login_response.userName;
+            return true;
         }
         catch (error) {
             console.error(error);

@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { Text, View } from "react-native";
 
 import Auth from "../my_components/auth";
 
