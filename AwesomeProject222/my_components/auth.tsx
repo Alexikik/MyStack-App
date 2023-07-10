@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import EncryptedStorage from "react-native-encrypted-storage";
 
 const LOGIN_URL = 'http://212.10.61.210:2000/Auth/Login'

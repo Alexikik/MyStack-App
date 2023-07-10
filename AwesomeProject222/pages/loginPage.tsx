@@ -3,7 +3,6 @@ import { Text, View, TextInput, TouchableOpacity, ActivityIndicator } from "reac
 
 import styles from "../Stylesheet";
 import Auth from "../my_components/auth";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 class LoginPage extends React.Component<any, any> {
     constructor(props: any) {
