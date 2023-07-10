@@ -6,7 +6,6 @@ import { Button, Text, View } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
-
 interface HomeScreenState {
     isLoading: boolean;
     data: string;

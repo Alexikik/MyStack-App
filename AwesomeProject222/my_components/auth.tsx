@@ -13,6 +13,7 @@ class Auth extends React.Component<any, any> {
 
         this.login = this.login.bind(this);
         this.retrieve_token_from_storage = this.retrieve_token_from_storage.bind(this);
+        this.logout = this.logout.bind(this);
     }
         
     async login(email: string, password: string): Promise<string> {
@@ -113,6 +114,57 @@ class Auth extends React.Component<any, any> {
             return 'error';
         }
     }
+
+    async TokenAuth(): Promise<boolean> {
+        const token = await this.retrieve_token_from_storage();
+        const url = 'http://212.10.61.210:2000/Auth/TokenAuth'
+
+        // If no token found, return false
+        if (token == null || token == 'error' || token == '')
+            return false;
+        
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept': '*/*',
+                },
+                body: JSON.stringify(new TokenAuthenticateRequest(token)),
+            });
+
+            // If response is not ok, return false
+            if (!response.ok) {
+                console.error(response);
+                return false;
+            }
+
+            // Read response as AuthResponse
+            const json = await response.json();
+            const auth_response = new AuthenticateResponse(json.id, json.token, json.email, json.userName);
+
+            return true;
+        }
+        catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
+    async logout(): Promise<boolean> {
+        try {
+            await EncryptedStorage.removeItem('token');
+            await EncryptedStorage.removeItem('username');
+            await EncryptedStorage.removeItem('email');
+            await EncryptedStorage.removeItem('userId');
+            return true;
+        }
+        catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
 }
 
 class AuthenticateRequest {
@@ -136,5 +188,13 @@ class AuthenticateResponse {
         this.userName = userName;
     }
 }
+
+class TokenAuthenticateRequest {
+    AuthenticationToken: string;
+    constructor(token: string) {
+        this.AuthenticationToken = token;
+    }
+}
+
 
 export default Auth;

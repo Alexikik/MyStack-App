@@ -8,6 +8,7 @@ import 'react-native-gesture-handler';
 
 import React from 'react';
 import {
+  Button,
   StyleSheet,
   Text,
   useColorScheme,
@@ -26,6 +27,8 @@ import HomeScreen from './pages/homeScreen';
 import DetailsScreen from './pages/details';
 import LoginPage from './pages/loginPage';
 import TestPage from './pages/testPage';
+import Auth from './my_components/auth';
+
 
 // type SectionProps = PropsWithChildren<{
 //   title: string;
@@ -58,16 +61,35 @@ import TestPage from './pages/testPage';
 // }
 
 
-// const Stack = createNativeStackNavigator();
-const Drawer = createDrawerNavigator();
+
+async function TokenAuth({navigation}: {navigation: any}) {
+    const auth = new Auth();
+    const result = await auth.TokenAuth();
+
+    if (result) {
+      // Navigate to home page
+      console.log("TokenAuth: true");
+    } else {
+      // Navigate to login page
+      console.log("TokenAuth: false");
+      navigation.navigate({ name: 'Login' });
+    }
+}
 
 function App(): JSX.Element {
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = Colors.darker;
   // const backgroundStyle = {
   //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   // };
+
+  React.useEffect(() => {
+    TokenAuth(navigation);
+  }, []);
+
+  const auth = new Auth();
 
   return (
     <NavigationContainer>
@@ -78,6 +100,8 @@ function App(): JSX.Element {
         <Drawer.Screen name="Test" component={TestPage} />
       </Drawer.Navigator>
     </NavigationContainer>
+      <View>
+        <Text>Logout</Text>
   );
 }
 
