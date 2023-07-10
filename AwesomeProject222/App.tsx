@@ -28,6 +28,7 @@ import HomeScreen from './pages/homeScreen';
 import DetailsScreen from './pages/details';
 import LoginPage from './pages/loginPage';
 import TestPage from './pages/testPage';
+import InternetMonitoring from './pages/internetMonitoringPage';
 import Auth from './my_components/auth';
 
 const Drawer = createDrawerNavigator();
@@ -124,6 +125,7 @@ function App(): JSX.Element {
         <Drawer.Screen name="Home" component={HomeScreen} />
         <Drawer.Screen name="Details" component={DetailsScreen} />
         <Drawer.Screen name="Test" component={TestPage} />
+        <Drawer.Screen name="Internet Monitoring" component={InternetMonitoring} />
         <Drawer.Screen name="Login" component={LoginPage} options={{headerShown: false, swipeEnabled: false, drawerItemStyle: {height: 0}}}/>
       </Drawer.Navigator>
     </NavigationContainer>
